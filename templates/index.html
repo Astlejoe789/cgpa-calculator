@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CGPA Calculator</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h2>CGPA Calculator (Letter Grades)</h2>
+
+  <form method="POST">
+    <div id="inputs">
+      <div class="subject">
+        Grade:
+        <select name="grade" required>
+          {% for grade in grade_list %}
+            <option value="{{ grade }}">{{ grade }}</option>
+          {% endfor %}
+        </select>
+        Credit:
+        <input type="number" name="credit" step="1" required>
+      </div>
+    </div>
+
+    <button type="button" onclick="addSubject()">➕ Add Subject</button><br><br>
+    <input type="submit" value="Calculate CGPA">
+  </form>
+
+  {% if cgpa is not none %}
+    <h3>Your CGPA: {{ cgpa }}</h3>
+  {% endif %}
+
+  <script>
+    function addSubject() {
+      const subjectDiv = document.createElement('div');
+      subjectDiv.className = 'subject';
+      subjectDiv.innerHTML = `
+        Grade:
+        <select name="grade" required>
+          {% for grade in grade_list %}
+            <option value="{{ grade }}">{{ grade }}</option>
+          {% endfor %}
+        </select>
+        Credit:
+        <input type="number" name="credit" step="1" required>
+      `;
+      document.getElementById('inputs').appendChild(subjectDiv);
+    }
+  </script>
+</body>
+</html>
